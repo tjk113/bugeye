@@ -18,7 +18,7 @@ namespace bugeye
 {
 bug_game::bug_game(int completed_games, const mj::game_data& data) :
     _bg(bn::regular_bg_items::tmg_press_a.create_bg((256 - 240) / 2, (256 - 160) / 2)),
-    // uh?
+    // create that guy
     _bugeye(bn::sprite_items::bugeye_bugeye.create_sprite(50, 50))
 {
     constexpr int frames_diff = maximum_frames - minimum_frames;
@@ -56,14 +56,20 @@ mj::game_result bug_game::play(const mj::game_data& data)
         //     _defeat = true;
         // }
         // 
-        if (bn::keypad::left_pressed() || bn::keypad::left_held() == true)
+        if (bn::keypad::left_pressed() || bn::keypad::left_held() == true) {
             _bugeye.set_x(_bugeye.x() - _speed);
-        else if (bn::keypad::right_pressed() || bn::keypad::right_held() == true)
+            _bugeye.set_horizontal_flip(true);
+        }
+        else if (bn::keypad::right_pressed() || bn::keypad::right_held() == true) {
             _bugeye.set_x(_bugeye.x() + _speed);
-        if (bn::keypad::up_pressed() || bn::keypad::up_held())
+            _bugeye.set_horizontal_flip(false);
+        }
+        if (bn::keypad::up_pressed() || bn::keypad::up_held()) {
             _bugeye.set_y(_bugeye.y() - _speed);
-        else if (bn::keypad::down_pressed() || bn::keypad::down_held())
+        }
+        else if (bn::keypad::down_pressed() || bn::keypad::down_held()) {
             _bugeye.set_y(_bugeye.y() + _speed);
+        }
     }
     else
     {
